@@ -5,6 +5,7 @@ package lesson2.task1
 import lesson1.task1.discriminant
 import kotlin.math.max
 import kotlin.math.sqrt
+import kotlin.math.abs
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
 // Максимальное количество баллов = 6
@@ -106,7 +107,12 @@ fun timeForHalfWay(
  */
 fun whichRookThreatens(
     kingX: Int, kingY: Int, rookX1: Int, rookY1: Int, rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    var score = 0
+    if (kingX == rookX1 || kingY == rookY1) score += 1
+    if (kingX == rookX2 || kingY == rookY2) score += 2
+    return score
+}
 
 /**
  * Простая (2 балла)
@@ -120,10 +126,12 @@ fun whichRookThreatens(
  */
 fun rookOrBishopThreatens(
     kingX: Int, kingY: Int, rookX: Int, rookY: Int, bishopX: Int, bishopY: Int
-): Int{
-
+    ): Int  {
+    var score = 0
+    if (rookX == kingX || kingY == rookY) score += 1
+    if (abs(kingX-bishopX)==abs(kingY-bishopY)) score += 2
+    return score
 }
-
 /**
  * Простая (2 балла)
  *
@@ -132,7 +140,10 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    var s=a*a+b*b
+
+}
 
 /**
  * Средняя (3 балла)
