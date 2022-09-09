@@ -87,3 +87,4 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val middle = a + b + c - smallest - max(max(a, b), c)
     return (middle <= r && smallest <= s) || (smallest <= r && middle <= s)
 }
+//
