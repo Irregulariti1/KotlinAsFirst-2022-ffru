@@ -69,7 +69,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    var last = age % 10
+    val last = age % 10
     return when {
         last == 1 && age != 11 && age != 111 -> "$age год"
         last in 2..4 && age !in 12..14 && age !in 112..114 -> "$age года"
@@ -85,12 +85,14 @@ fun ageDescription(age: Int): String {
  * Определить, за какое время он одолел первую половину пути?
  */
 fun timeForHalfWay(
-    t1: Double, v1: Double,
-    t2: Double, v2: Double,
-    t3: Double, v3: Double
+    t1: Double, v1: Double, t2: Double, v2: Double, t3: Double, v3: Double
 ): Double {
-    val hs = (t1 * v1 + t2 * v2 + t3 * v3) / 2
-
+    var halfs = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+    if (halfs - t1 * v1 <= 0) return (halfs / v1)
+    halfs -= t1 * v1
+    if (halfs - t2 * v2 <= 0) return (t1 + halfs / v2)
+    halfs -= t2 * v2
+    return (t1 + t2 + halfs / v3)
 }
 
 /**
@@ -103,9 +105,7 @@ fun timeForHalfWay(
  * Считать, что ладьи не могут загораживать друг друга
  */
 fun whichRookThreatens(
-    kingX: Int, kingY: Int,
-    rookX1: Int, rookY1: Int,
-    rookX2: Int, rookY2: Int
+    kingX: Int, kingY: Int, rookX1: Int, rookY1: Int, rookX2: Int, rookY2: Int
 ): Int = TODO()
 
 /**
@@ -119,10 +119,10 @@ fun whichRookThreatens(
  * Считать, что ладья и слон не могут загораживать друг друга.
  */
 fun rookOrBishopThreatens(
-    kingX: Int, kingY: Int,
-    rookX: Int, rookY: Int,
-    bishopX: Int, bishopY: Int
-): Int = TODO()
+    kingX: Int, kingY: Int, rookX: Int, rookY: Int, bishopX: Int, bishopY: Int
+): Int{
+
+}
 
 /**
  * Простая (2 балла)
