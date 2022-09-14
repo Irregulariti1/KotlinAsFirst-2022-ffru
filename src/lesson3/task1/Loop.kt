@@ -2,7 +2,10 @@
 
 package lesson3.task1
 
+import kotlin.math.PI
 import kotlin.math.sqrt
+import kotlin.math.abs
+import kotlin.math.pow
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -159,7 +162,18 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    if (n % 10 == n) return false
+    else {
+        val first = n % 10
+        var n = n / 10
+        while (n != 0) {
+            if (n % 10 != first) return true
+            n /= 10
+        }
+        return false
+    }
+}
 
 /**
  * Средняя (4 балла)
@@ -170,7 +184,22 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+/*во имя отца святого духа и сына его да запустится этот код без лагов */
+fun sin(x: Double, eps: Double): Double {
+    var x = x % (2 * PI)
+    var sinx = x
+    var member = x
+    var ind = 3;
+    var cnt = 0
+    while (abs(member) >= eps) {
+        member = x.pow(ind) / factorial(ind)
+        member = if (cnt % 2 == 0) member * (-1) else member
+        sinx += member
+        ind += 2
+        cnt += 1
+    }
+    return sinx
+}
 
 /**
  * Средняя (4 балла)
@@ -181,7 +210,21 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var x = x % (2 * PI)
+    var cosx = 1.0
+    var member= 1.0
+    var ind = 2;
+    var cnt = 0
+    while (abs(member) >= eps) {
+        member = x.pow(ind) / factorial(ind)
+        member = if (cnt % 2 == 0) member * (-1) else member
+        cosx += member
+        ind += 2
+        cnt += 1
+    }
+    return cosx
+}
 
 /**
  * Сложная (4 балла)

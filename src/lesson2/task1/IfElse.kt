@@ -151,7 +151,7 @@ fun rookOrBishopThreatens(
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
     if (c >= a + b || a >= c + b || b >= a + c) return -1
-    val maxsq = (max(max(a, b), c)).pow(2)
+    val maxsq = maxOf(a, b, c).pow(2)
     val minsq = min(a, b).pow(2) + min(max(a, b), c).pow(2)
     return when {
         maxsq < minsq -> 0
@@ -169,15 +169,15 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if (a <= c) {
-        return when {
+    return if (a <= c) {
+        when {
             b < c -> -1
             b == c -> 0
-            b > c && b <= d -> b - c
+            b in (c + 1)..d -> b - c
             else -> d - c
         }
     } else {
-        return when {
+        when {
             d < a -> -1
             d == a -> 0
             d <= b -> d - a
