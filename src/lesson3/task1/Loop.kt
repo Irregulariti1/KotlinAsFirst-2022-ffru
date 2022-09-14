@@ -169,12 +169,18 @@ fun collatzSteps(x: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int {
-    var temp = max(m, n)
-    while (temp % n != 0 || temp % m != 0) {
-        temp++
+fun gcdevklid(m: Int, n: Int): Int {
+    var m = m;
+    var n = n
+    while (m != 0 && n != 0) {
+        if (m > n) m = m % n
+        else n = n % m
     }
-    return temp
+    return max(m, n)
+}
+
+fun lcm(m: Int, n: Int): Int {
+    return (m * n / gcdevklid(m, n))
 }
 
 /**
@@ -306,26 +312,42 @@ fun cos(x: Double, eps: Double): Double {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
+fun revertl(n: Long): Long {
+    var n = n
+    var ans: Long = 0
+    var digit: Long = 1
+    while (digit <= n) {
+        digit *= 10
+    }
+    digit /= 10
+    while (n != 0L) {
+        ans += n % 10 * digit
+        n /= 10
+        digit /= 10
+    }
+    return ans
+}
+
 fun squareSequenceDigit(n: Int): Int {
     var ind = 1;
     var cnt = 1
     while (ind != n) {
         cnt += 1
-        var square = cnt * cnt
+        var square: Long = (cnt * cnt).toLong()
         var cntzero = 1
-        while (square % 10 == 0) {
+        while (square % 10 == 0L) {
             cntzero *= 10
             square /= 10
         }
-        square = revert(cnt * cnt)
-        while (square != 0 || cntzero != 1) {
+        square = revertl((cnt * cnt.toLong()))
+        while (square != 0L || cntzero != 1) {
             if (cntzero != 1) {
                 ind += 1
                 cntzero /= 10
                 if (ind == n) return 0
-            } else if (square != 0) {
+            } else if (square != 0L) {
                 ind += 1
-                if (ind == n) return square % 10
+                if (ind == n) return (square % 10).toInt()
                 square /= 10
             }
         }
@@ -347,21 +369,21 @@ fun fibSequenceDigit(n: Int): Int {
     var cnt = 1
     while (ind != n) {
         cnt += 1
-        var fib = fib(cnt)
+        var fib: Long = fib(cnt).toLong()
         var cntzero = 1
-        while (fib % 10 == 0) {
+        while (fib % 10 == 0L) {
             cntzero *= 10
             fib /= 10
         }
-        fib = revert(fib(cnt))
-        while (fib != 0 || cntzero != 1) {
+        fib = revertl(fib(cnt).toLong())
+        while (fib != 0L || cntzero != 1) {
             if (cntzero != 1) {
                 ind += 1
                 cntzero /= 10
                 if (ind == n) return 0
-            } else if (fib != 0) {
+            } else if (fib != 0L) {
                 ind += 1
-                if (ind == n) return fib % 10
+                if (ind == n) return (fib % 10).toInt()
                 fib /= 10
             }
         }
