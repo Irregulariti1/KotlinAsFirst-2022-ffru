@@ -2,10 +2,13 @@
 
 package lesson3.task1
 
+import kotlin.math.*
+
 import kotlin.math.PI
 import kotlin.math.sqrt
 import kotlin.math.abs
 import kotlin.math.pow
+
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -75,7 +78,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var count = 0
+    var n = n
+    do {
+        count++
+        n /= 10
+    } while (n != 0)
+    return count
+}
 
 /**
  * Простая (2 балла)
@@ -83,21 +94,46 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var ans = 1;
+    var n = n - 2;
+    var temp = 1;
+    var temp2 = 1
+    while (n > 0) {
+        n--
+        temp2 = ans
+        ans += temp
+        temp = temp2
+    }
+    return ans
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    for (i in 2..(sqrt(n.toDouble())).toInt()) {
+        if (n % i == 0) return i
+    }
+    return n
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    if (n % 2 == 0) return n / 2
+    else {
+        for (i in (n / 2 downTo 1)) {
+            if (n % i == 0) return i
+        }
+        return 1
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -115,7 +151,17 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var x = x;
+    var cnt = 0
+    while (x != 1) {
+        cnt++
+        if (x % 2 == 0) x /= 2
+        else x = 3 * x + 1
+    }
+    return cnt
+
+}
 
 /**
  * Средняя (3 балла)
@@ -123,7 +169,13 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var temp = max(m, n)
+    while (temp % n != 0 || temp % m != 0) {
+        temp++
+    }
+    return temp
+}
 
 /**
  * Средняя (3 балла)
@@ -132,7 +184,12 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    for (i in 2..max(m, n) / 2) {
+        if (m % i == 0 && n % i == 0) return false
+    }
+    return true
+}
 
 /**
  * Средняя (3 балла)
@@ -141,7 +198,21 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var n = n
+    var ans: Long = 0
+    var digit: Long = 1
+    while (digit <= n) {
+        digit *= 10
+    }
+    digit /= 10
+    while (n != 0) {
+        ans += n % 10 * digit
+        n /= 10
+        digit /= 10
+    }
+    return ans.toInt()
+}
 
 /**
  * Средняя (3 балла)
@@ -152,7 +223,7 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 /**
  * Средняя (3 балла)
@@ -184,7 +255,7 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-/*во имя отца святого духа и сына его да запустится этот код без лагов */
+
 fun sin(x: Double, eps: Double): Double {
     var x = x % (2 * PI)
     var sinx = x
@@ -213,7 +284,7 @@ fun sin(x: Double, eps: Double): Double {
 fun cos(x: Double, eps: Double): Double {
     var x = x % (2 * PI)
     var cosx = 1.0
-    var member= 1.0
+    var member = 1.0
     var ind = 2;
     var cnt = 0
     while (abs(member) >= eps) {
@@ -235,7 +306,32 @@ fun cos(x: Double, eps: Double): Double {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var ind = 1;
+    var cnt = 1
+    while (ind != n) {
+        cnt += 1
+        var square = cnt * cnt
+        var cntzero = 1
+        while (square % 10 == 0) {
+            cntzero *= 10
+            square /= 10
+        }
+        square = revert(cnt * cnt)
+        while (square != 0 || cntzero != 1) {
+            if (cntzero != 1) {
+                ind += 1
+                cntzero /= 10
+                if (ind == n) return 0
+            } else if (square != 0) {
+                ind += 1
+                if (ind == n) return square % 10
+                square /= 10
+            }
+        }
+    }
+    return 1
+}
 
 /**
  * Сложная (5 баллов)
@@ -246,4 +342,29 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var ind = 1;
+    var cnt = 1
+    while (ind != n) {
+        cnt += 1
+        var fib = fib(cnt)
+        var cntzero = 1
+        while (fib % 10 == 0) {
+            cntzero *= 10
+            fib /= 10
+        }
+        fib = revert(fib(cnt))
+        while (fib != 0 || cntzero != 1) {
+            if (cntzero != 1) {
+                ind += 1
+                cntzero /= 10
+                if (ind == n) return 0
+            } else if (fib != 0) {
+                ind += 1
+                if (ind == n) return fib % 10
+                fib /= 10
+            }
+        }
+    }
+    return 1
+}
