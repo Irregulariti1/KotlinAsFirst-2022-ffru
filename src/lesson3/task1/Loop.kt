@@ -375,5 +375,5 @@ fun fibSequenceDigit(n: Int): Int {
         fib = fib(ind.toInt()).toLong()
         temp += log10(fib.toDouble()).toInt() + 1
     }
-    return digitIndex(temp - n, fib.toLong())
+    return digitIndex(temp - n, fib)
 }
