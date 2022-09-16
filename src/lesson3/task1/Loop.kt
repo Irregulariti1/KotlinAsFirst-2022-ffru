@@ -306,39 +306,54 @@ fun cos(x: Double, eps: Double): Double {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
+fun revertl(n: Long): Long {
+    var n = n
+    var ans: Long = 0
+    var digit: Long = 1
+    while (digit <= n) {
+        digit *= 10
+    }
+    digit /= 10
+    while (n != 0L) {
+        ans += n % 10 * digit
+        n /= 10
+        digit /= 10
+    }
+    return ans
+}
 
-fun digitIndex(index: Int, digit: Int): Int {
+fun digitIndex(index: Int, digit: Long): Int {
     var cntzero = 0
     var index = index
     var digit = digit
     var length = log10(digit.toDouble()).toInt() + 1
-    while (digit % 10 == 0) {
+    while (digit % 10 == 0L) {
         cntzero += 1
         digit /= 10
     }
     if (length - cntzero < index) return 0
     else {
-        digit = revert(digit)
+        digit = revertl(digit)
         var k = digit % 10
         for (i in index..length - 1) {
             k = digit % 10
             digit /= 10
         }
-        return k
+        return k.toInt()
     }
 }
 
 fun squareSequenceDigit(n: Int): Int {
     var ind = 1.0
-    var square = 1.0
+    var square: Long = 1
     var temp = 1
     if (temp == n) return 1
     while (temp < n) {
         ind += 1
-        square = ind * ind
-        temp += log10(square).toInt() + 1
+        square = (ind * ind).toLong()
+        temp += log10(square.toDouble()).toInt() + 1
     }
-    return digitIndex(temp - n, square.toInt())
+    return digitIndex(temp - n, square)
 }
 
 /**
@@ -352,13 +367,13 @@ fun squareSequenceDigit(n: Int): Int {
  */
 fun fibSequenceDigit(n: Int): Int {
     var ind = 1.0
-    var fib = 1.0
+    var fib: Long = 1
     var temp = 1
     if (temp == n) return 1
     while (temp < n) {
         ind += 1
-        fib = fib(ind.toInt()).toDouble()
-        temp += log10(fib).toInt() + 1
+        fib = fib(ind.toInt()).toLong()
+        temp += log10(fib.toDouble()).toInt() + 1
     }
-    return digitIndex(temp - n, fib.toInt())
+    return digitIndex(temp - n, fib.toLong())
 }
