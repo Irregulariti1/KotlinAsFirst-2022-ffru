@@ -95,9 +95,9 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var ans = 1;
-    var n = n - 2;
-    var temp = 1;
+    var ans = 1
+    var n = n - 2
+    var temp = 1
     var temp2 = 1
     while (n > 0) {
         n--
@@ -152,7 +152,7 @@ fun maxDivisor(n: Int): Int {
  * этого для какого-либо начального X > 0.
  */
 fun collatzSteps(x: Int): Int {
-    var x = x;
+    var x = x
     var cnt = 0
     while (x != 1) {
         cnt++
@@ -170,18 +170,17 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun gcdevklid(m: Int, n: Int): Int {
-    var m = m;
+    var m = m
     var n = n
     while (m != 0 && n != 0) {
-        if (m > n) m = m % n
-        else n = n % m
+        if (m > n) m %= n
+        else n %= m
     }
     return max(m, n)
 }
 
-fun lcm(m: Int, n: Int): Int {
-    return (m * n / gcdevklid(m, n))
-}
+fun lcm(m: Int, n: Int): Int = (m * n / gcdevklid(m, n))
+
 
 /**
  * Средняя (3 балла)
@@ -190,12 +189,7 @@ fun lcm(m: Int, n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    for (i in 2..max(m, n) / 2) {
-        if (m % i == 0 && n % i == 0) return false
-    }
-    return true
-}
+fun isCoPrime(m: Int, n: Int): Boolean = lcm(m, n) == m * n
 
 /**
  * Средняя (3 балла)
@@ -266,7 +260,7 @@ fun sin(x: Double, eps: Double): Double {
     var x = x % (2 * PI)
     var sinx = x
     var member = x
-    var ind = 3;
+    var ind = 3
     var cnt = 0
     while (abs(member) >= eps) {
         member = x.pow(ind) / factorial(ind)
@@ -291,7 +285,7 @@ fun cos(x: Double, eps: Double): Double {
     var x = x % (2 * PI)
     var cosx = 1.0
     var member = 1.0
-    var ind = 2;
+    var ind = 2
     var cnt = 0
     while (abs(member) >= eps) {
         member = x.pow(ind) / factorial(ind)
@@ -312,47 +306,39 @@ fun cos(x: Double, eps: Double): Double {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revertl(n: Long): Long {
-    var n = n
-    var ans: Long = 0
-    var digit: Long = 1
-    while (digit <= n) {
-        digit *= 10
-    }
-    digit /= 10
-    while (n != 0L) {
-        ans += n % 10 * digit
-        n /= 10
+
+fun digitIndex(index: Int, digit: Int): Int {
+    var cntzero = 0
+    var index = index
+    var digit = digit
+    var length = log10(digit.toDouble()).toInt() + 1
+    while (digit % 10 == 0) {
+        cntzero += 1
         digit /= 10
     }
-    return ans
+    if (length - cntzero < index) return 0
+    else {
+        digit = revert(digit)
+        var k = digit % 10
+        for (i in index..length - 1) {
+            k = digit % 10
+            digit /= 10
+        }
+        return k
+    }
 }
 
 fun squareSequenceDigit(n: Int): Int {
-    var ind = 1;
-    var cnt = 1
-    while (ind != n) {
-        cnt += 1
-        var square: Long = (cnt * cnt).toLong()
-        var cntzero = 1
-        while (square % 10 == 0L) {
-            cntzero *= 10
-            square /= 10
-        }
-        square = revertl((cnt * cnt.toLong()))
-        while (square != 0L || cntzero != 1) {
-            if (cntzero != 1) {
-                ind += 1
-                cntzero /= 10
-                if (ind == n) return 0
-            } else if (square != 0L) {
-                ind += 1
-                if (ind == n) return (square % 10).toInt()
-                square /= 10
-            }
-        }
+    var ind = 1.0
+    var square = 1.0
+    var temp = 1
+    if (temp == n) return 1
+    while (temp < n) {
+        ind += 1
+        square = ind * ind
+        temp += log10(square).toInt() + 1
     }
-    return 1
+    return digitIndex(temp - n, square.toInt())
 }
 
 /**
@@ -365,28 +351,14 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var ind = 1;
-    var cnt = 1
-    while (ind != n) {
-        cnt += 1
-        var fib: Long = fib(cnt).toLong()
-        var cntzero = 1
-        while (fib % 10 == 0L) {
-            cntzero *= 10
-            fib /= 10
-        }
-        fib = revertl(fib(cnt).toLong())
-        while (fib != 0L || cntzero != 1) {
-            if (cntzero != 1) {
-                ind += 1
-                cntzero /= 10
-                if (ind == n) return 0
-            } else if (fib != 0L) {
-                ind += 1
-                if (ind == n) return (fib % 10).toInt()
-                fib /= 10
-            }
-        }
+    var ind = 1.0
+    var fib = 1.0
+    var temp = 1
+    if (temp == n) return 1
+    while (temp < n) {
+        ind += 1
+        fib = fib(ind.toInt()).toDouble()
+        temp += log10(fib).toInt() + 1
     }
-    return 1
+    return digitIndex(temp - n, fib.toInt())
 }

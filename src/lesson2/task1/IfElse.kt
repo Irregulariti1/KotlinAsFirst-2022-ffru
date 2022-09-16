@@ -71,14 +71,13 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    var last = age % 10
-    return when {
-        last == 1 && age != 11 && age != 111 -> "$age год"
-        last in 2..4 && age !in 12..14 && age !in 112..114 -> "$age года"
+fun ageDescription(age: Int): String =
+    when {
+        age % 10 == 1 && age != 11 && age != 111 -> "$age год"
+        age % 10 in 2..4 && age !in 12..14 && age !in 112..114 -> "$age года"
         else -> "$age лет"
     }
-}
+
 
 /**
  * Простая (2 балла)
@@ -168,8 +167,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return if (a <= c) {
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
+    if (a <= c) {
         when {
             b < c -> -1
             b == c -> 0
@@ -184,5 +183,5 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
             else -> b - a
         }
     }
-}
+
 //
