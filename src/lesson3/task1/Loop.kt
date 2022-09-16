@@ -321,7 +321,7 @@ fun revertl(n: Long): Long {
     }
     return ans
 }
-
+//
 fun digitIndex(index: Int, digit: Long): Int {
     var cntzero = 0
     var index = index
