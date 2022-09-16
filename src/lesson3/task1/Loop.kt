@@ -355,7 +355,7 @@ fun squareSequenceDigit(n: Int): Int {
     }
     return digitIndex(temp - n, square)
 }
-
+//
 /**
  * Сложная (5 баллов)
  *
