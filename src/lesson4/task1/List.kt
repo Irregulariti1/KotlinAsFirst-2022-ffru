@@ -245,6 +245,7 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     var list = mutableListOf<Int>()
     var n = n
+    if (n == 0) return listOf(0)
     while (n != 0) {
         list.add(n % base)
         n /= base
