@@ -391,10 +391,10 @@ fun russian(n: Int): String {
     var ans = ""
     if (ans1 != 0) {
         val s = subrussian(ans1)
-        if (ans1 % 100 in 11..19 || ans1 % 100 % 10 == 0 || ans1 % 100 % 10 == 5) ans = "$s тысяч "
-        else if (ans1 % 100 % 10 == 1) ans = s.substring(0, s.length - 2) + "на тысяча "
-        else if (ans1 % 100 % 10 == 2) ans = s.substring(0, s.length - 1) + "е тысячи "
-        else ans = "$s тысячи "
+        ans = if (ans1 % 100 in 11..19 || ans1 % 100 % 10 == 0 || ans1 % 100 % 10 in 5..9) "$s тысяч "
+        else if (ans1 % 100 % 10 == 1) s.substring(0, s.length - 2) + "на тысяча "
+        else if (ans1 % 100 % 10 == 2) s.substring(0, s.length - 1) + "е тысячи "
+        else "$s тысячи "
     }
     ans += subrussian(ans2)
     return ans.trim()
