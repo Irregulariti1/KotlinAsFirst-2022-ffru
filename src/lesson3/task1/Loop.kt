@@ -235,15 +235,13 @@ fun isPalindrome(n: Int): Boolean = n == revert(n)
  */
 fun hasDifferentDigits(n: Int): Boolean {
     if (n % 10 == n) return false
-    else {
-        val first = n % 10
-        var n = n / 10
-        while (n != 0) {
-            if (n % 10 != first) return true
-            n /= 10
-        }
-        return false
+    val first = n % 10
+    var n = n / 10
+    while (n != 0) {
+        if (n % 10 != first) return true
+        n /= 10
     }
+    return false
 }
 
 /**
@@ -321,6 +319,7 @@ fun revertl(n: Long): Long {
     }
     return ans
 }
+
 //
 fun digitIndex(index: Int, digit: Long): Int {
     var cntzero = 0
