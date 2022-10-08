@@ -124,13 +124,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double {
-    var absv = 0.0
-    for (i in v) {
-        absv += i * i
-    }
-    return sqrt(absv)
-}
+fun abs(v: List<Double>): Double = sqrt(v.sumOf { it * it })
 
 /**
  * Простая (2 балла)
@@ -179,13 +173,7 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int {
-    var ans = 0
-    for (i in 0..p.size - 1) {
-        ans += p[i] * x.toDouble().pow(i).toInt()
-    }
-    return ans
-}
+fun polynom(p: List<Int>, x: Int): Int = p.mapIndexed { index, i -> i * x.toDouble().pow(index).toInt() }.sum()
 
 /**
  * Средняя (3 балла)
@@ -268,12 +256,12 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     val based = "abcdefghijklmnopqrstuvwxyz"
     val list = convert(n, base)
-    var ans = ""
+    var ans = StringBuilder()
     for (i in list) {
-        if (i <= 9) ans += i.toString()
-        else ans += based[i - 10]
+        if (i <= 9) ans.append(i.toString())
+        else ans.append(based[i - 10])
     }
-    return ans
+    return ans.toString()
 }
 
 /**
@@ -357,7 +345,7 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun subrussian(n: Int): String {
-    var ans = ""
+    var ans = StringBuilder()
     val first =
         listOf("один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
     val second = listOf(
@@ -376,13 +364,13 @@ fun subrussian(n: Int): String {
         listOf("двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
     val fourth =
         listOf("сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
-    if (n / 100 != 0) ans = fourth[n / 100 - 1]
+    if (n / 100 != 0) ans.append(fourth[n / 100 - 1])
     if (n / 10 % 10 != 0) {
-        if (n / 10 % 10 == 1) ans += " " + second[n % 10]
-        else ans = ans + " " + third[n / 10 % 10 - 2]
+        if (n / 10 % 10 == 1) ans.append(" " + second[n % 10])
+        else ans.append(" " + third[n / 10 % 10 - 2])
     }
-    if (n % 10 != 0 && n / 10 % 10 != 1) ans = ans + " " + first[n % 10 - 1]
-    return ans.trim()
+    if (n % 10 != 0 && n / 10 % 10 != 1) ans.append(" " + first[n % 10 - 1])
+    return ans.toString().trim()
 }
 
 fun russian(n: Int): String {
