@@ -225,14 +225,14 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
         if (value.first == kind) regedit[key] = value.second
     }
     var ans = Double.MAX_VALUE + 1
-    var prod = ""
+    var prod = " "
     for ((key, value) in regedit) {
         if (value <= ans) {
             ans = value
             prod = key
         }
     }
-    if (prod == "" || kind == "") return null
+    if (prod == " ") return null
     return prod
 }
 
