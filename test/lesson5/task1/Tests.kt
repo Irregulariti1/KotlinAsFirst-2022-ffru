@@ -227,6 +227,9 @@ class Tests {
                 "печенье"
             )
         )
+        assertNull(
+            findCheapestStuff()
+        )
     }
 
     @Test

@@ -232,7 +232,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
             prod = key
         }
     }
-    if (prod == "" && kind != "") return null
+    if (prod == "" || kind == "") return null
     return prod
 }
 
