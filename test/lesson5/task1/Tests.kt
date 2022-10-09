@@ -227,113 +227,115 @@ class Tests {
                 "печенье"
             )
         )
+    }
 
-        @Test
-        @Tag("3")
-        fun canBuildFrom() {
-            assertFalse(canBuildFrom(emptyList(), "foo"))
-            assertTrue(canBuildFrom(listOf('a', 'b', 'o'), "baobab"))
-            assertFalse(canBuildFrom(listOf('a', 'm', 'r'), "Marat"))
-        }
+    @Test
+    @Tag("3")
+    fun canBuildFrom() {
+        assertFalse(canBuildFrom(emptyList(), "foo"))
+        assertTrue(canBuildFrom(listOf('a', 'b', 'o'), "baobab"))
+        assertFalse(canBuildFrom(listOf('a', 'm', 'r'), "Marat"))
+        assertTrue(canBuildFrom(listOf('x'), "X"))
+    }
 
-        @Test
-        @Tag("4")
-        fun extractRepeats() {
-            assertEquals(
-                emptyMap<String, Int>(),
-                extractRepeats(emptyList())
-            )
-            assertEquals(
-                mapOf("a" to 2),
-                extractRepeats(listOf("a", "b", "a"))
-            )
-            assertEquals(
-                emptyMap<String, Int>(),
-                extractRepeats(listOf("a", "b", "c"))
-            )
-        }
+    @Test
+    @Tag("4")
+    fun extractRepeats() {
+        assertEquals(
+            emptyMap<String, Int>(),
+            extractRepeats(emptyList())
+        )
+        assertEquals(
+            mapOf("a" to 2),
+            extractRepeats(listOf("a", "b", "a"))
+        )
+        assertEquals(
+            emptyMap<String, Int>(),
+            extractRepeats(listOf("a", "b", "c"))
+        )
+    }
 
-        @Test
-        @Tag("3")
-        fun hasAnagrams() {
-            assertFalse(hasAnagrams(emptyList()))
-            assertTrue(hasAnagrams(listOf("рот", "свет", "тор")))
-            assertFalse(hasAnagrams(listOf("рот", "свет", "код", "дверь")))
-            assertFalse(hasAnagrams(listOf("поле", "полено")))
-            assertTrue(hasAnagrams(listOf("лунь", "нуль")))
-        }
+    @Test
+    @Tag("3")
+    fun hasAnagrams() {
+        assertFalse(hasAnagrams(emptyList()))
+        assertTrue(hasAnagrams(listOf("рот", "свет", "тор")))
+        assertFalse(hasAnagrams(listOf("рот", "свет", "код", "дверь")))
+        assertFalse(hasAnagrams(listOf("поле", "полено")))
+        assertTrue(hasAnagrams(listOf("лунь", "нуль")))
+    }
 
-        @Test
-        @Tag("5")
-        fun propagateHandshakes() {
-            assertEquals(
+    @Test
+    @Tag("5")
+    fun propagateHandshakes() {
+        assertEquals(
+            mapOf(
+                "Marat" to setOf("Mikhail", "Sveta"),
+                "Sveta" to setOf("Mikhail"),
+                "Mikhail" to setOf()
+            ),
+            propagateHandshakes(
                 mapOf(
-                    "Marat" to setOf("Mikhail", "Sveta"),
-                    "Sveta" to setOf("Mikhail"),
-                    "Mikhail" to setOf()
-                ),
-                propagateHandshakes(
-                    mapOf(
-                        "Marat" to setOf("Sveta"),
-                        "Sveta" to setOf("Mikhail")
-                    )
+                    "Marat" to setOf("Sveta"),
+                    "Sveta" to setOf("Mikhail")
                 )
             )
-            assertEquals(
+        )
+        assertEquals(
+            mapOf(
+                "Marat" to setOf("Mikhail", "Sveta"),
+                "Sveta" to setOf("Marat", "Mikhail"),
+                "Mikhail" to setOf("Sveta", "Marat"),
+                "Friend" to setOf("GoodGnome"),
+                "EvilGnome" to setOf(),
+                "GoodGnome" to setOf()
+            ),
+            propagateHandshakes(
                 mapOf(
                     "Marat" to setOf("Mikhail", "Sveta"),
-                    "Sveta" to setOf("Marat", "Mikhail"),
-                    "Mikhail" to setOf("Sveta", "Marat"),
+                    "Sveta" to setOf("Marat"),
+                    "Mikhail" to setOf("Sveta"),
                     "Friend" to setOf("GoodGnome"),
-                    "EvilGnome" to setOf(),
-                    "GoodGnome" to setOf()
-                ),
-                propagateHandshakes(
-                    mapOf(
-                        "Marat" to setOf("Mikhail", "Sveta"),
-                        "Sveta" to setOf("Marat"),
-                        "Mikhail" to setOf("Sveta"),
-                        "Friend" to setOf("GoodGnome"),
-                        "EvilGnome" to setOf()
-                    )
+                    "EvilGnome" to setOf()
                 )
             )
-        }
+        )
+    }
 
-        @Test
-        @Tag("6")
-        fun findSumOfTwo() {
-            assertEquals(
-                Pair(-1, -1),
-                findSumOfTwo(emptyList(), 1)
-            )
-            assertEquals(
-                Pair(0, 2),
-                findSumOfTwo(listOf(1, 2, 3), 4)
-            )
-            assertEquals(
-                Pair(-1, -1),
-                findSumOfTwo(listOf(1, 2, 3), 6)
-            )
-        }
+    @Test
+    @Tag("6")
+    fun findSumOfTwo() {
+        assertEquals(
+            Pair(-1, -1),
+            findSumOfTwo(emptyList(), 1)
+        )
+        assertEquals(
+            Pair(0, 2),
+            findSumOfTwo(listOf(1, 2, 3), 4)
+        )
+        assertEquals(
+            Pair(-1, -1),
+            findSumOfTwo(listOf(1, 2, 3), 6)
+        )
+    }
 
-        @Test
-        @Tag("8")
-        fun bagPacking() {
-            assertEquals(
-                setOf("Кубок"),
-                bagPacking(
-                    mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
-                    850
-                )
+    @Test
+    @Tag("8")
+    fun bagPacking() {
+        assertEquals(
+            setOf("Кубок"),
+            bagPacking(
+                mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
+                850
             )
-            assertEquals(
-                emptySet<String>(),
-                bagPacking(
-                    mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
-                    450
-                )
+        )
+        assertEquals(
+            emptySet<String>(),
+            bagPacking(
+                mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
+                450
             )
-        }
+        )
     }
 }
+

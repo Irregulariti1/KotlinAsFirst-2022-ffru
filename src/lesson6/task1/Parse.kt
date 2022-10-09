@@ -84,6 +84,7 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
+    if (str == "") return ""
     val number = listOf(
         "января",
         "февраля",
@@ -300,7 +301,7 @@ fun mostExpensive(description: String): String {
     var answer = 0.0
     var answer2 = ""
     for (i in 1 until list.size step 2) {
-        if (list[i].toDouble() > answer) {
+        if (list[i].toDouble() >= answer) {
             answer = list[i].toDouble()
             answer2 = list[i - 1]
         }
@@ -333,7 +334,7 @@ fun fromRoman(roman: String): Int {
     for (i in fromRoman.keys) {
         control = control.replace(i.toString(), "")
     }
-    if (control != "") return -1
+    if (control != "" || roman == "") return -1
     var ans = 0
     for (i in 0 until roman.length - 1) {
         if (fromRoman[roman[i]]!! < fromRoman[roman[i + 1]]!!) ans -= fromRoman[roman[i]]!!
@@ -402,6 +403,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     var cnt = 0
     try {
         while (cnt < limit) {
+            if (i == commands.length) break
             if (commands[i] == '<') j -= 1
             else if (commands[i] == '>') j += 1
             else if (commands[i] == '+') list[j] += 1
@@ -416,7 +418,6 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                 }
             }
             if (j == list.size) throw IllegalStateException()
-            if (i == commands.length - 1) break
             i++
             cnt++
         }
