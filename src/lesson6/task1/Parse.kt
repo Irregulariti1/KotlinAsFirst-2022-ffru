@@ -84,7 +84,6 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    if (str == "") return ""
     val number = listOf(
         "января",
         "февраля",
@@ -100,15 +99,19 @@ fun dateStrToDigit(str: String): String {
         "декабря"
     )
     try {
-        val splitted = str.split(" ").toMutableList()
-        val a1 = splitted[0].toInt()
-        val a2 = number.indexOf(splitted[1]) + 1
-        val a3 = splitted[2]
-        if (a2 == 0 || daysInMonth(a2, a3.toInt()) < a1 || splitted.size != 3) return ""
-        splitted[0] = if (a1 in 1..9) "0$a1" else a1.toString()
-        splitted[1] = if (a2 in 1..9) "0$a2" else a2.toString()
-        return (splitted.joinToString(separator = "."))
-    } catch (e: IndexOutOfBoundsException) {
+        try {
+            val splitted = str.split(" ").toMutableList()
+            val a1 = splitted[0].toInt()
+            val a2 = number.indexOf(splitted[1]) + 1
+            val a3 = splitted[2]
+            if (a2 == 0 || daysInMonth(a2, a3.toInt()) < a1 || splitted.size != 3) return ""
+            splitted[0] = if (a1 in 1..9) "0$a1" else a1.toString()
+            splitted[1] = if (a2 in 1..9) "0$a2" else a2.toString()
+            return (splitted.joinToString(separator = "."))
+        } catch (e: IndexOutOfBoundsException) {
+            return ""
+        }
+    } catch (e: NumberFormatException) {
         return ""
     }
 }
@@ -398,12 +401,12 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
         }
     }
     val list = MutableList(size = cells) { 0 }
+    if (commands == "") return list
     var i = 0
     var j = cells / 2
     var cnt = 0
     try {
         while (cnt < limit) {
-            if (i == commands.length) break
             if (commands[i] == '<') j -= 1
             else if (commands[i] == '>') j += 1
             else if (commands[i] == '+') list[j] += 1
@@ -417,6 +420,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                     i = bracket1[bracket2.indexOf(i)]
                 }
             }
+            if (i == commands.length - 1) break
             if (j == list.size) throw IllegalStateException()
             i++
             cnt++
