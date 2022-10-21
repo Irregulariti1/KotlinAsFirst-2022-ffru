@@ -394,8 +394,8 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                     i = bracket1[bracket2.indexOf(i)]
                 }
             }
+            if (j >= list.size || j < 0) throw IllegalStateException()
             if (i == commands.length - 1) break
-            if (j == list.size) throw IllegalStateException()
             i++
             cnt++
         }
