@@ -2,6 +2,7 @@
 
 package lesson5.task1
 
+import ru.spbstu.wheels.PositiveInfinity
 import ru.spbstu.wheels.sorted
 import kotlin.math.max
 
@@ -224,15 +225,15 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     for ((key, value) in stuff) {
         if (value.first == kind) regedit[key] = value.second
     }
-    var ans = Double.MAX_VALUE + 1
-    var prod = " "
+    var ans = Double.POSITIVE_INFINITY
+    var prod = ""
     for ((key, value) in regedit) {
         if (value <= ans) {
             ans = value
             prod = key
         }
     }
-    if (prod == " ") return null
+    if (prod == "") return null
     return prod
 }
 
@@ -246,13 +247,11 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    val ctrl = word.split("").map { it.lowercase() }.toMutableList()
-    val chars = chars.map { it.lowercase().single() }
-    ctrl.removeFirst()
-    ctrl.removeLast()
+    val ctrl = word.map { it.lowercase() }.toSet()
+    val chars = chars.map { it.lowercase() }
     var ok = true
     for (i in ctrl) {
-        if (i.single() !in chars) {
+        if (i !in chars) {
             ok = false
             break
         }
@@ -278,8 +277,7 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
         if (i !in ans.keys) ans[i] = 1
         else ans[i] = ans[i]!! + 1
     }
-    ans = ans.filter { (key, value) -> value != 1 }.toMutableMap()
-    return (ans)
+    return ans.filter { (key, value) -> value != 1 }
 }
 
 
@@ -296,13 +294,11 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
 fun hasAnagrams(words: List<String>): Boolean {
-    if (words.isEmpty()) return false
     val chars = mutableListOf<List<Char>>()
-    var ok = false
     for (i in words) {
         chars.add(i.toList().sorted())
     }
-    return chars.toSet().size != chars.size
+    return words.isNotEmpty() && chars.toSet().size != chars.size // тут есть множества (^-人-^)
 }
 
 

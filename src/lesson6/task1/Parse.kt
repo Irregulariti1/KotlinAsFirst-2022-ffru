@@ -72,6 +72,8 @@ fun main() {
 }
 
 
+private const val s = ""
+
 /**
  * Средняя (4 балла)
  *
@@ -99,18 +101,14 @@ fun dateStrToDigit(str: String): String {
         "декабря"
     )
     try {
-        try {
-            val splitted = str.split(" ").toMutableList()
-            val a1 = splitted[0].toInt()
-            val a2 = number.indexOf(splitted[1]) + 1
-            val a3 = splitted[2]
-            if (a2 == 0 || daysInMonth(a2, a3.toInt()) < a1 || splitted.size != 3) return ""
-            splitted[0] = if (a1 in 1..9) "0$a1" else a1.toString()
-            splitted[1] = if (a2 in 1..9) "0$a2" else a2.toString()
-            return (splitted.joinToString(separator = "."))
-        } catch (e: IndexOutOfBoundsException) {
-            return ""
-        }
+        val splitted = str.split(" ")
+        val a1 = splitted[0].toInt()
+        val a2 = number.indexOf(splitted[1]) + 1
+        val a3 = splitted[2]
+        if (a2 == 0 || daysInMonth(a2, a3.toInt()) < a1 || splitted.size != 3) return ""
+        return "${twoDigitStr(a1)}.${twoDigitStr(a2)}.$a3"
+    } catch (e: IndexOutOfBoundsException) {
+        return ""
     } catch (e: NumberFormatException) {
         return ""
     }
@@ -142,23 +140,18 @@ fun dateDigitToStr(digital: String): String {
         "декабря"
     )
     try {
-        var splitted = digital.split(".")
-        var a1 = ""
-        var a2 = ""
-        var a3 = ""
-        try {
-            a1 = splitted[0].toInt().toString()
-            a2 = number[splitted[1].toInt() - 1]
-            a3 = splitted[2]
-        } catch (e: NumberFormatException) {
-            return ""
-        }
+        val splitted = digital.split(".")
+        val a1 = splitted[0].toInt().toString()
+        val a2 = number[splitted[1].toInt() - 1]
+        val a3 = splitted[2]
         if (splitted[1].toInt() == 0 ||
             daysInMonth(splitted[1].toInt(), a3.toInt()) < a1.toInt() ||
             splitted.size != 3
         ) return ""
         return ("$a1 $a2 $a3")
     } catch (e: IndexOutOfBoundsException) {
+        return ""
+    } catch (e: NumberFormatException) {
         return ""
     }
 }
@@ -179,22 +172,9 @@ fun dateDigitToStr(digital: String): String {
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
 fun flattenPhoneNumber(phone: String): String {
-    var phone = phone
-    phone = phone.replace(" ", "")
-    phone = phone.replace("-", "")
-    val prefix = if ("+" in phone) "+" else ""
-    phone = phone.replace("+", "")
-    var bracketscheck = phone.replace("(", "")
-    bracketscheck = bracketscheck.replace(")", "")
-    try {
-        bracketscheck.toLong().toString()
-        for (i in phone.indices - 1) {
-            if (phone[i] == '(' && phone[i + 1] == ')') return ""
-        }
-        return prefix + bracketscheck.toLong().toString()
-    } catch (e: NumberFormatException) {
-        return ""
-    }
+    val phone = phone.replace("[ -]".toRegex(), "")
+    if (!phone.matches(Regex("""(\+\d+)?(\(\d+\))?\d+"""))) return ""
+    return phone.replace("[()]".toRegex(), "")
 }
 
 /**
@@ -229,8 +209,7 @@ fun bestLongJump(jumps: String): Int {
  * вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val control = jumps.replace("+", "").replace("-", "").replace("%", "").replace(" ", "")
-    if (!(control.all { c -> c.isDigit() })) return -1
+    if (!jumps.matches(Regex("""(\d+ [+%-]+\s?)+"""))) return -1
     val temp = jumps.split(" ")
     var answer = -1
     var i = 0
@@ -251,20 +230,15 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    val control = expression.replace(" + ", "").replace(" - ", "")
-    if (!(control.all { c -> c.isDigit() })) throw IllegalArgumentException()
-    var answer = 0
-    try {
-        val expression = expression.split(" ")
-        answer = expression.first().toInt()
-        var i = 1
-        while (i < expression.size) {
-            if ("+" == expression[i]) answer += expression[i + 1].toInt()
-            else if ("-" == expression[i]) answer -= expression[i + 1].toInt()
-            i += 2
-        }
-    } catch (e: IndexOutOfBoundsException) {
-        throw IllegalArgumentException()
+    if (!expression.matches(Regex("""\d+( [+-] \d+)*"""))) throw IllegalArgumentException()
+    var answer: Int
+    val expression = expression.split(" ")
+    answer = expression.first().toInt()
+    var i = 1
+    while (i < expression.size) {
+        if ("+" == expression[i]) answer += expression[i + 1].toInt()
+        else if ("-" == expression[i]) answer -= expression[i + 1].toInt()
+        i += 2
     }
     return answer
 }

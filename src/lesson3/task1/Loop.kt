@@ -332,7 +332,7 @@ fun digitIndex(index: Int, digit: Long): Int {
     else {
         digit = revertl(digit)
         var k = digit % 10
-        for (i in index..length - 1) {
+        for (i in index until length) {
             k = digit % 10
             digit /= 10
         }

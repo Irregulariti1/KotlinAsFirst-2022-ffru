@@ -143,7 +143,7 @@ fun mean(list: List<Double>): Double = if (list.isNotEmpty()) list.sum() / list.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
     val mean = mean(list)
-    for (i in 0..list.size - 1) {
+    for (i in 0 until list.size) {
         list[i] -= mean
     }
     return list
@@ -159,7 +159,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  */
 fun times(a: List<Int>, b: List<Int>): Int {
     var c = 0
-    for (i in 0..a.size - 1) {
+    for (i in a.indices) {
         c += a[i] * b[i]
     }
     return c
@@ -272,7 +272,7 @@ fun convertToString(n: Int, base: Int): String {
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
 fun decimal(digits: List<Int>, base: Int): Int {
-    var digits = digits.reversed()
+    val digits = digits.reversed()
     var ans = 0
     for (i in digits.indices) {
         ans += (digits[i] * (base.toDouble().pow(i))).toInt()
@@ -293,11 +293,10 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * (например, str.toInt(base)), запрещается.
  */
 fun decimalFromString(str: String, base: Int): Int {
-    val based = "abcdefghijklmnopqrstuvwxyz"
-    var list = mutableListOf<Int>()
+    val list = mutableListOf<Int>()
     for (i in str) {
         if (i.isDigit()) list.add(i.digitToInt())
-        else list.add(based.indexOf(i) + 10)
+        else list.add(i - 'a' + 10)
     }
     return decimal(list, base)
 }
@@ -345,7 +344,7 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun subrussian(n: Int): String {
-    var ans = StringBuilder()
+    val ans = StringBuilder()
     val first =
         listOf("один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
     val second = listOf(
