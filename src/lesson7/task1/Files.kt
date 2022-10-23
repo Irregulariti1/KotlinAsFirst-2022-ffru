@@ -460,6 +460,39 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+    val answer = File(outputName).bufferedWriter()
+    println(" $lhv | $rhv")
+    answer.write(" $lhv | $rhv\n")
+    val lhvS = lhv.toString()
+    var s = lhvS[0].toString()
+    var i = 1
+    while (s.toInt() / rhv == 0 && i != lhvS.length) {
+        s += lhvS[i]
+        i += 1
+    }
+    var full = s.toInt() / rhv * rhv
+    println("-$full" + " ".repeat(lhvS.length + 3 - full.toString().length) + (lhv / rhv).toString())
+    answer.write("-$full" + " ".repeat(lhvS.length + 3 - full.toString().length) + (lhv / rhv).toString() + "\n")
+    println("-".repeat(full.toString().length + 1))
+    answer.write("-".repeat(full.toString().length + 1) + "\n")
+    var countSpaces = s.length
+    if (i != lhvS.length) {
+        s = (s.toInt() - full).toString()
+    }
+    while (i != lhvS.length) {
+        s += lhvS[i].toString()
+        full = s.toInt() / rhv * rhv
+        println(" ".repeat(countSpaces) + s)
+        answer.write(" ".repeat(countSpaces) + s + "\n")
+        println(" ".repeat(countSpaces - 1 + (s.length - full.toString().length)) + "-$full")
+        answer.write(" ".repeat(countSpaces - 1 + (s.length - full.toString().length)) + "-$full" + "\n")
+        println(" ".repeat(countSpaces - 1 + (s.length - full.toString().length)) + "-".repeat(full.toString().length + 1))
+        answer.write(" ".repeat(countSpaces - 1 + (s.length - full.toString().length)) + "-".repeat(full.toString().length + 1) + "\n")
+        countSpaces += s.length - (s.toInt() - full).toString().length
+        i += 1
+        if ((s.toInt() - full)==0) s = (s.toInt() - full).toString()
+    }
+    println(" ".repeat(countSpaces) + (lhv % rhv).toString())
+    answer.write(" ".repeat(countSpaces) + (lhv % rhv).toString() + "\n")
+    answer.close()
 }
-
