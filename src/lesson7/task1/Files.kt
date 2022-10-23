@@ -479,10 +479,12 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     println(" ".repeat(ost2) + "-".repeat(full.toString().length + 1))
     answer.write(" ".repeat(ost2) + "-".repeat(full.toString().length + 1) + "\n")
     var countSpaces = ost2 + full.toString().length
+    var ok = true
     if (i != lhvS.length) {
         s = (s.toInt() - full).toString()
     }
     while (i != lhvS.length) {
+        ok = false
         s += lhvS[i].toString()
         full = s.toInt() / rhv * rhv
         println(" ".repeat(countSpaces) + s)
@@ -495,7 +497,12 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         i += 1
         if ((s.toInt() - full) == 0) s = (s.toInt() - full).toString()
     }
-    println(" ".repeat(countSpaces) + (lhv % rhv).toString())
-    answer.write(" ".repeat(countSpaces) + (lhv % rhv).toString() + "\n")
+    if (ok) {
+        println(" ".repeat(ost1) + (lhv % rhv).toString())
+        answer.write(" ".repeat(ost1) + (lhv % rhv).toString() + "\n")
+    } else {
+        println(" ".repeat(countSpaces) + (lhv % rhv).toString())
+        answer.write(" ".repeat(countSpaces) + (lhv % rhv).toString() + "\n")
+    }
     answer.close()
 }
