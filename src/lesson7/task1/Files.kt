@@ -461,8 +461,6 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     val answer = File(outputName).bufferedWriter()
-    println(" $lhv | $rhv")
-    answer.write(" $lhv | $rhv\n")
     val lhvS = lhv.toString()
     var s = lhvS[0].toString()
     var i = 1
@@ -471,11 +469,16 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         i += 1
     }
     var full = s.toInt() / rhv * rhv
-    println("-$full" + " ".repeat(lhvS.length + 3 - full.toString().length) + (lhv / rhv).toString())
-    answer.write("-$full" + " ".repeat(lhvS.length + 3 - full.toString().length) + (lhv / rhv).toString() + "\n")
-    println("-".repeat(full.toString().length + 1))
-    answer.write("-".repeat(full.toString().length + 1) + "\n")
-    var countSpaces = s.length
+    var ost1 = 0
+    var ost2 = if (s.length - full.toString().length - 1 >= 0) s.length - full.toString().length - 1 else 0
+    if (-s.length + full.toString().length == 0) ost1 = 1
+    println(" ".repeat(ost1) + "$lhv | $rhv")
+    answer.write(" ".repeat(ost1) + "$lhv | $rhv" + "\n")
+    println((" ".repeat(ost2) + "-$full" + " ".repeat(lhvS.length + 3 - full.toString().length - (s.length - full.toString().length)) + (lhv / rhv).toString()))
+    answer.write((" ".repeat(ost2) + "-$full" + " ".repeat(lhvS.length + 3 - full.toString().length - (s.length - full.toString().length)) + (lhv / rhv).toString()) + "\n")
+    println(" ".repeat(ost2) + "-".repeat(full.toString().length + 1))
+    answer.write(" ".repeat(ost2) + "-".repeat(full.toString().length + 1) + "\n")
+    var countSpaces = ost2 + full.toString().length
     if (i != lhvS.length) {
         s = (s.toInt() - full).toString()
     }
@@ -490,7 +493,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         answer.write(" ".repeat(countSpaces - 1 + (s.length - full.toString().length)) + "-".repeat(full.toString().length + 1) + "\n")
         countSpaces += s.length - (s.toInt() - full).toString().length
         i += 1
-        if ((s.toInt() - full)==0) s = (s.toInt() - full).toString()
+        if ((s.toInt() - full) == 0) s = (s.toInt() - full).toString()
     }
     println(" ".repeat(countSpaces) + (lhv % rhv).toString())
     answer.write(" ".repeat(countSpaces) + (lhv % rhv).toString() + "\n")
