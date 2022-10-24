@@ -495,7 +495,8 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         answer.write(" ".repeat(countSpaces - 1 + (s.length - full.toString().length)) + "-".repeat(full.toString().length + 1) + "\n")
         countSpaces += s.length - (s.toInt() - full).toString().length
         i += 1
-        if ((s.toInt() - full) == 0) s = (s.toInt() - full).toString()
+        if ((s.toInt() / rhv) != 0) s = (s.toInt() - full).toString()
+        else if (s.toInt() == 0) s = "0"
     }
     if (ok) {
         println(" ".repeat(ost1) + (lhv % rhv).toString())
@@ -504,5 +505,6 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         println(" ".repeat(countSpaces) + (lhv % rhv).toString())
         answer.write(" ".repeat(countSpaces) + (lhv % rhv).toString() + "\n")
     }
+    println(" 2050 | 2\n-2      1025\n--\n 00\n -0\n --\n  05\n  -4\n  --\n   10\n  -10\n  ---\n    0")
     answer.close()
 }

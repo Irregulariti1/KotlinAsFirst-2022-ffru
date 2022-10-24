@@ -368,7 +368,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
         else if (i == ']') ctrl -= 1
         if (ctrl < 0) throw IllegalArgumentException()
     }
-    if (ctrl != 0) throw IllegalArgumentException()
+    if (ctrl != 0 || control != "") throw IllegalArgumentException()
     val temporary = mutableListOf<Int>()
     val bracket1 = mutableListOf<Int>()
     val bracket2 = mutableListOf<Int>()
