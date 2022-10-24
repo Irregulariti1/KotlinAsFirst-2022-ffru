@@ -473,11 +473,8 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     var ost1 = 0
     var ost2 = if (s.length - full.toString().length - 1 >= 0) s.length - full.toString().length - 1 else 0
     if (-s.length + full.toString().length == 0) ost1 = 1
-    println(" ".repeat(ost1) + "$lhv | $rhv")
     answer.write(" ".repeat(ost1) + "$lhv | $rhv" + "\n")
-    println((" ".repeat(ost2) + "-$full" + " ".repeat(lhvS.length + 3 - full.toString().length - (s.length - full.toString().length)) + (lhv / rhv).toString()))
     answer.write((" ".repeat(ost2) + "-$full" + " ".repeat(lhvS.length + 3 - full.toString().length - (s.length - full.toString().length)) + (lhv / rhv).toString()) + "\n")
-    println("-".repeat(maxOf(full.toString().length + 1,s.length)))
     answer.write("-".repeat(maxOf(full.toString().length + 1,s.length)) + "\n")
     var countSpaces = full.toString().length + 1 - (s.toInt() - full).toString().length
     var ok = true
@@ -488,11 +485,8 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         ok = false
         s += lhvS[i].toString()
         full = s.toInt() / rhv * rhv
-        println(" ".repeat(countSpaces) + s)
         answer.write(" ".repeat(countSpaces) + s + "\n")
-        println(" ".repeat(countSpaces - 1 + (s.length - full.toString().length)) + "-$full")
         answer.write(" ".repeat(countSpaces - 1 + (s.length - full.toString().length)) + "-$full" + "\n")
-        println(" ".repeat(countSpaces + (minOf(0,s.length - 1 - full.toString().length))) + "-".repeat(maxOf(full.toString().length + 1,s.length)))
         answer.write(" ".repeat(countSpaces + (minOf(0,s.length - 1 - full.toString().length))) + "-".repeat(maxOf(full.toString().length + 1,s.length)) + "\n")
         countSpaces += s.length - (s.toInt() - full).toString().length
         i += 1
@@ -500,10 +494,8 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         s = s.toInt().toString()
     }
     if (ok) {
-        println(" ".repeat(maxOf(full.toString().length + 1 - (s.toInt() - full).toString().length,0)) + (lhv % rhv).toString())
         answer.write(" ".repeat(maxOf(full.toString().length + 1 - (s.toInt() - full).toString().length,0)) + (lhv % rhv).toString() + "\n")
     } else {
-        println(" ".repeat(countSpaces) + (lhv % rhv).toString())
         answer.write(" ".repeat(countSpaces) + (lhv % rhv).toString() + "\n")
     }
     answer.close()
