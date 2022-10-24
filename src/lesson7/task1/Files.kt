@@ -497,7 +497,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         countSpaces += s.length - (s.toInt() - full).toString().length
         i += 1
         if ((s.toInt() / rhv) != 0) s = (s.toInt() - full).toString()
-        else if (s.toInt() == 0) s = "0"
+        s = s.toInt().toString()
     }
     if (ok) {
         println(" ".repeat(full.toString().length + 1 - (s.toInt() - full).toString().length) + (lhv % rhv).toString())
