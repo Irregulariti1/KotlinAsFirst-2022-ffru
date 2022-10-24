@@ -499,12 +499,11 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         else if (s.toInt() == 0) s = "0"
     }
     if (ok) {
-        println(" ".repeat(ost1) + (lhv % rhv).toString())
-        answer.write(" ".repeat(ost1) + (lhv % rhv).toString() + "\n")
+        println(" ".repeat(full.toString().length + 1 - (s.toInt() - full).toString().length) + (lhv % rhv).toString())
+        answer.write(" ".repeat(full.toString().length + 1 - (s.toInt() - full).toString().length) + (lhv % rhv).toString() + "\n")
     } else {
         println(" ".repeat(countSpaces) + (lhv % rhv).toString())
         answer.write(" ".repeat(countSpaces) + (lhv % rhv).toString() + "\n")
     }
-    println(" 2050 | 2\n-2      1025\n--\n 00\n -0\n --\n  05\n  -4\n  --\n   10\n  -10\n  ---\n    0")
     answer.close()
 }
