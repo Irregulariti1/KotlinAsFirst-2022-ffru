@@ -477,8 +477,8 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     answer.write(" ".repeat(ost1) + "$lhv | $rhv" + "\n")
     println((" ".repeat(ost2) + "-$full" + " ".repeat(lhvS.length + 3 - full.toString().length - (s.length - full.toString().length)) + (lhv / rhv).toString()))
     answer.write((" ".repeat(ost2) + "-$full" + " ".repeat(lhvS.length + 3 - full.toString().length - (s.length - full.toString().length)) + (lhv / rhv).toString()) + "\n")
-    println(" ".repeat(ost2) + "-".repeat(full.toString().length + 1))
-    answer.write(" ".repeat(ost2) + "-".repeat(full.toString().length + 1) + "\n")
+    println("-".repeat(maxOf(full.toString().length + 1,s.length)))
+    answer.write("-".repeat(maxOf(full.toString().length + 1,s.length)) + "\n")
     var countSpaces = full.toString().length + 1 - (s.toInt() - full).toString().length
     var ok = true
     if (i != lhvS.length) {
@@ -500,8 +500,8 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         s = s.toInt().toString()
     }
     if (ok) {
-        println(" ".repeat(full.toString().length + 1 - (s.toInt() - full).toString().length) + (lhv % rhv).toString())
-        answer.write(" ".repeat(full.toString().length + 1 - (s.toInt() - full).toString().length) + (lhv % rhv).toString() + "\n")
+        println(" ".repeat(maxOf(full.toString().length + 1 - (s.toInt() - full).toString().length,0)) + (lhv % rhv).toString())
+        answer.write(" ".repeat(maxOf(full.toString().length + 1 - (s.toInt() - full).toString().length,0)) + (lhv % rhv).toString() + "\n")
     } else {
         println(" ".repeat(countSpaces) + (lhv % rhv).toString())
         answer.write(" ".repeat(countSpaces) + (lhv % rhv).toString() + "\n")
