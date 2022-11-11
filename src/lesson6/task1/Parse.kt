@@ -71,9 +71,6 @@ fun main() {
     }
 }
 
-
-private const val s = ""
-
 /**
  * Средняя (4 балла)
  *
@@ -148,7 +145,7 @@ fun dateDigitToStr(digital: String): String {
             daysInMonth(splitted[1].toInt(), a3.toInt()) < a1.toInt() ||
             splitted.size != 3
         ) return ""
-        return ("$a1 $a2 $a3")
+        return "$a1 $a2 $a3"
     } catch (e: IndexOutOfBoundsException) {
         return ""
     } catch (e: NumberFormatException) {

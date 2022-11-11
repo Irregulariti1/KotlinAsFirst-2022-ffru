@@ -221,20 +221,14 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    val regedit = mutableMapOf<String, Double>()
+    val regedit = mutableMapOf<Double, String>()
     for ((key, value) in stuff) {
-        if (value.first == kind) regedit[key] = value.second
+        if (value.first == kind) regedit[value.second] = key
     }
-    var ans = Double.POSITIVE_INFINITY
-    var prod = null.toString()
-    for ((key, value) in regedit) {
-        if (value <= ans) {
-            ans = value
-            prod = key
-        }
+    return when {
+        regedit.isEmpty() -> null
+        else -> regedit[regedit.keys.min()]
     }
-    if (prod == null.toString()) return null
-    return prod
 }
 
 /**
@@ -246,18 +240,8 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    val ctrl = word.map { it.lowercase() }.toSet()
-    val chars = chars.map { it.lowercase() }
-    var ok = true
-    for (i in ctrl) {
-        if (i !in chars) {
-            ok = false
-            break
-        }
-    }
-    return ok
-}
+fun canBuildFrom(chars: List<Char>, word: String): Boolean =
+    chars.map { it.lowercase() }.containsAll(word.map { it.lowercase() })
 
 /**
  * Средняя (4 балла)
@@ -294,11 +278,11 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
 fun hasAnagrams(words: List<String>): Boolean {
-    val chars = mutableListOf<List<Char>>()
+    val chars = mutableSetOf<List<Char>>()
     for (i in words) {
         chars.add(i.toList().sorted())
     }
-    return words.isNotEmpty() && chars.toSet().size != chars.size // тут есть множества (^-人-^)
+    return words.isNotEmpty() && chars.size != words.size // (^-人-^)
 }
 
 

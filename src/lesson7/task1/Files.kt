@@ -294,7 +294,17 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    val reader = File(inputName).reader()
+    var c = reader.read()
+    var s: Char
+    while (c != -1) {
+        s = c.toChar()
+        if (s == '\n') {
+        }
+        c = reader.read()
+    }
+// kod probela - 32
 }
 
 /**
@@ -475,7 +485,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     if (-s.length + full.toString().length == 0) ost1 = 1
     answer.write(" ".repeat(ost1) + "$lhv | $rhv" + "\n")
     answer.write((" ".repeat(ost2) + "-$full" + " ".repeat(lhvS.length + 3 - full.toString().length - (s.length - full.toString().length)) + (lhv / rhv).toString()) + "\n")
-    answer.write("-".repeat(maxOf(full.toString().length + 1,s.length)) + "\n")
+    answer.write("-".repeat(maxOf(full.toString().length + 1, s.length)) + "\n")
     var countSpaces = full.toString().length + 1 - (s.toInt() - full).toString().length
     var ok = true
     if (i != lhvS.length) {
@@ -487,14 +497,28 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         full = s.toInt() / rhv * rhv
         answer.write(" ".repeat(countSpaces) + s + "\n")
         answer.write(" ".repeat(countSpaces - 1 + (s.length - full.toString().length)) + "-$full" + "\n")
-        answer.write(" ".repeat(countSpaces + (minOf(0,s.length - 1 - full.toString().length))) + "-".repeat(maxOf(full.toString().length + 1,s.length)) + "\n")
+        answer.write(
+            " ".repeat(
+                countSpaces + (minOf(
+                    0,
+                    s.length - 1 - full.toString().length
+                ))
+            ) + "-".repeat(maxOf(full.toString().length + 1, s.length)) + "\n"
+        )
         countSpaces += s.length - (s.toInt() - full).toString().length
         i += 1
         if ((s.toInt() / rhv) != 0) s = (s.toInt() - full).toString()
         s = s.toInt().toString()
     }
     if (ok) {
-        answer.write(" ".repeat(maxOf(full.toString().length + 1 - (s.toInt() - full).toString().length,0)) + (lhv % rhv).toString() + "\n")
+        answer.write(
+            " ".repeat(
+                maxOf(
+                    full.toString().length + 1 - (s.toInt() - full).toString().length,
+                    0
+                )
+            ) + (lhv % rhv).toString() + "\n"
+        )
     } else {
         answer.write(" ".repeat(countSpaces) + (lhv % rhv).toString() + "\n")
     }
