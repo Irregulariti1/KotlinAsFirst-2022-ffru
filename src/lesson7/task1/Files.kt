@@ -2,9 +2,7 @@
 
 package lesson7.task1
 
-import ru.spbstu.wheels.out
 import java.io.File
-import java.lang.Math.abs
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -67,7 +65,7 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
 fun deleteMarked(inputName: String, outputName: String) {
     val answer = File(outputName).bufferedWriter()
     for (line in File(inputName).readLines()) {
-        if (line == "" || line.first() != '_') answer.write(line + "\n")
+        if (line.isEmpty() || line.first() != '_') answer.write(line + "\n")
     }
     answer.close()
 }
@@ -295,14 +293,26 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
-    val reader = File(inputName).reader()
+    val reader = File(inputName).bufferedReader()
     var c = reader.read()
+    var ok = false
+    val temp = ""
     var s: Char
+    val st = mutableListOf<String>()
     while (c != -1) {
         s = c.toChar()
-        if (s == '\n') {
+        print(s)
+        println(c)
+        if (s == '*') {
+            if ('*' !in temp) {
+
+            } else {
+
+            }
         }
-        c = reader.read()
+        if (s == 10.toChar()) {
+        }
+        c = reader.read() // при тринадцати скип элемента
     }
 // kod probela - 32
 }
@@ -481,12 +491,16 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     }
     var full = s.toInt() / rhv * rhv
     var ost1 = 0
-    var ost2 = if (s.length - full.toString().length - 1 >= 0) s.length - full.toString().length - 1 else 0
-    if (-s.length + full.toString().length == 0) ost1 = 1
+    var fullLength = full.toString().length
+    val ost2 = if (s.length - fullLength - 1 >= 0) s.length - fullLength - 1 else 0
+    if (-s.length + fullLength == 0) ost1 = 1
     answer.write(" ".repeat(ost1) + "$lhv | $rhv" + "\n")
-    answer.write((" ".repeat(ost2) + "-$full" + " ".repeat(lhvS.length + 3 - full.toString().length - (s.length - full.toString().length)) + (lhv / rhv).toString()) + "\n")
-    answer.write("-".repeat(maxOf(full.toString().length + 1, s.length)) + "\n")
-    var countSpaces = full.toString().length + 1 - (s.toInt() - full).toString().length
+    answer.write(
+        (" ".repeat(ost2) + "-$full" + " ".repeat(lhvS.length + 3 - fullLength - (s.length - fullLength))
+                + (lhv / rhv).toString()) + "\n"
+    )
+    answer.write("-".repeat(maxOf(fullLength + 1, s.length)) + "\n")
+    var countSpaces = fullLength + 1 - (s.toInt() - full).toString().length
     var ok = true
     if (i != lhvS.length) {
         s = (s.toInt() - full).toString()
@@ -495,15 +509,16 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         ok = false
         s += lhvS[i].toString()
         full = s.toInt() / rhv * rhv
+        fullLength = full.toString().length
         answer.write(" ".repeat(countSpaces) + s + "\n")
-        answer.write(" ".repeat(countSpaces - 1 + (s.length - full.toString().length)) + "-$full" + "\n")
+        answer.write(" ".repeat(countSpaces - 1 + (s.length - fullLength)) + "-$full" + "\n")
         answer.write(
             " ".repeat(
                 countSpaces + (minOf(
                     0,
-                    s.length - 1 - full.toString().length
+                    s.length - 1 - fullLength
                 ))
-            ) + "-".repeat(maxOf(full.toString().length + 1, s.length)) + "\n"
+            ) + "-".repeat(maxOf(fullLength + 1, s.length)) + "\n"
         )
         countSpaces += s.length - (s.toInt() - full).toString().length
         i += 1
@@ -514,7 +529,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         answer.write(
             " ".repeat(
                 maxOf(
-                    full.toString().length + 1 - (s.toInt() - full).toString().length,
+                    fullLength + 1 - (s.toInt() - full).toString().length,
                     0
                 )
             ) + (lhv % rhv).toString() + "\n"
