@@ -407,3 +407,15 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     }
     return list
 }
+
+/*fun ak47(table: Map<String, Int>, taxes: String): List<String> {
+    val ans = mutableMapOf<String, Int>()
+    val taxesToList = taxes.split('\n')
+    for (i in taxesToList) {
+        if (!i.matches(Regex("""[ ЁёА-яЯ]+ - [ ЁёА-яЯ]+ - \d+"""))) throw IllegalArgumentException()
+        else {
+            ans[i.split(" - ")[0]] = (i.split(" - ")[2]).toInt() * (table.getOrDefault(i.split(" - ")[1], 13)) / 100
+        }
+    }
+    return ans.keys.sortedBy { ans[it] }
+}*/

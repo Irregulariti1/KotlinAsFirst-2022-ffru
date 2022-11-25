@@ -296,26 +296,104 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     val reader = File(inputName).bufferedReader()
     var c = reader.read()
     var ok = false
-    val temp = ""
+    var flag = false
+    var temp = ""
+    var lasttemp = ""
     var s: Char
     val st = mutableListOf<String>()
+    writer.write("<html><body><p>")
     while (c != -1) {
         s = c.toChar()
-        print(s)
-        println(c)
-        if (s == '*') {
-            if ('*' !in temp) {
+        c = reader.read()
+        if (s == '\n') {
+            if (ok && s == '\n') {
+                writer.write("</p>")
+                ok = false
+                reader.mark(1)
+                if (reader.read() == -1) {
+                    writer.write("</body></html>")
+                    writer.close()
+                    return
+                } else {
+                    writer.write("<p>")
+                    reader.reset()
+                }
+            } else if (s == '\n') {
+                ok = true
+            }
+        } else if ((s == '*' || s == '~') && (s in temp || temp == "")) {
+            temp += s
+        } else {
+            if (s !in temp && (s == '*' || s == '~')) {
+                flag = true
+            }
+            when (temp) {
+                "***" -> {
+                    if ("<b>" in st && "<i>" in st) {
+                        writer.write(st.last().first() + "/" + st.last().substring(1))
+                        st.removeLast()
+                        writer.write(st.last().first() + "/" + st.last().substring(1))
+                        st.removeLast()
+                    } else {
+                        writer.write("<b><i>")
+                        st.add("<b>")
+                        st.add("<i>")
+                    }
+                    temp = ""
+                }
 
+                "**" -> {
+                    if ("<b>" in st) {
+                        if (st.last() == "<b>") {
+                            writer.write("</b>")
+                            st.removeLast()
+                        }
+                    } else {
+                        writer.write("<b>")
+                        st.add("<b>")
+                    }
+                    temp = ""
+                }
+
+                "*" -> {
+                    if ("<i>" in st) {
+                        if (st.last() == "<i>") {
+                            writer.write("</i>")
+                            st.removeLast()
+                        }
+                    } else {
+                        writer.write("<i>")
+                        st.add("<i>")
+                    }
+                    temp = ""
+                }
+
+                "~~" -> {
+                    if ("<s>" in st) {
+                        if (st.last() == "<s>") {
+                            writer.write("</s>")
+                            st.removeLast()
+                        }
+                    } else {
+                        writer.write("<s>")
+                        st.add("<s>")
+                    }
+                    temp = ""
+                }
+            }
+            if (flag) {
+                temp = s.toString()
+                flag = false
             } else {
-
+                writer.write(s.toString())
             }
         }
-        if (s == 10.toChar()) {
-        }
-        c = reader.read() // при тринадцати скип элемента
     }
-// kod probela - 32
+    writer.write("</body></html>")
+    writer.close()
 }
+// kod probela - 32
+
 
 /**
  * Сложная (23 балла)

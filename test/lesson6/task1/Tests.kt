@@ -155,4 +155,18 @@ class Tests {
         assertThrows(IllegalStateException::class.java) { computeDeviceCells(20, ">>>>>>>>>>>>>", 12) }
         assertThrows(IllegalStateException::class.java) { computeDeviceCells(1, "<", 500) }
     }
+
+    /*@Test
+    fun ak47() {
+        assertEquals(
+            listOf("ООО Горняк", "Вбербанк", "Политек Ведра"), ak47(
+                mapOf("Производство напитков" to 4, "Горнодобывающая промышленность" to 12, "Банковские операции" to 9),
+                """Вбербанк - Банковские операции - 190000
+                    |ООО Горняк - Горнодобывающая промышленность - 100000
+                    |Политек Ведра - Образование - 9000000""".trimMargin()
+            )
+        )
+        assertThrows(IllegalArgumentException::class.java) { ak47(mapOf(), "") }
+    }
+    */
 }
