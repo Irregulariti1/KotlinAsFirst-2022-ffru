@@ -307,6 +307,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
         c = reader.read()
         if ((s == '*' || s == '~') && (s in temp || temp == "")) {
             temp += s
+            ok = false
         } else {
             if (s != '\n' && !s.isWhitespace()) {
                 ok = false
