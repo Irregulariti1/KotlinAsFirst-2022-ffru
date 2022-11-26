@@ -298,36 +298,41 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var ok = false
     var flag = false
     var temp = ""
-    var lastc = c
+    var lastc = true
     var s: Char
     val st = mutableListOf<String>()
     writer.write("<html><body><p>")
     while (c != -1) {
-        lastc = c
         s = c.toChar()
         c = reader.read()
         if ((s == '*' || s == '~') && (s in temp || temp == "")) {
             temp += s
         } else {
-            if (s != '\n' && !s.isWhitespace()) ok = false
+            if (s != '\n' && !s.isWhitespace()) {
+                ok = false
+                lastc = true
+            }
             if (s == '\n') {
                 println(ok)
                 println("$c $lastc $s")
-                if (ok && s == '\n') {
-                    writer.write("</p>")
-                    ok = false
-                    reader.mark(1)
-                    if (reader.read() == -1) {
-                        writer.write("</body></html>")
-                        writer.close()
-                        return
-                    } else {
-                        writer.write("<p>")
-                        reader.reset()
-                        continue
+                if (lastc) {
+                    if (ok && s == '\n') {
+                        writer.write("</p>")
+                        ok = false
+                        reader.mark(1)
+                        if (reader.read() == -1) {
+                            writer.write("</body></html>")
+                            writer.close()
+                            return
+                        } else {
+                            writer.write("<p>")
+                            lastc = false
+                            reader.reset()
+                            continue
+                        }
+                    } else if (s == '\n') {
+                        ok = true
                     }
-                } else if (s == '\n') {
-                    ok = true
                 }
             }
             if (s !in temp && (s == '*' || s == '~')) {
