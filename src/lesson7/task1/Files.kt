@@ -302,6 +302,9 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var s: Char
     val st = mutableListOf<String>()
     writer.write("<html><body><p>")
+    while (c.toChar() == '\n') {
+        c = reader.read()
+    }
     while (c != -1) {
         s = c.toChar()
         c = reader.read()
@@ -314,8 +317,6 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                 lastc = true
             }
             if (s == '\n') {
-                println(ok)
-                println("$c $lastc $s")
                 if (lastc) {
                     if (ok && s == '\n') {
                         writer.write("</p>")
