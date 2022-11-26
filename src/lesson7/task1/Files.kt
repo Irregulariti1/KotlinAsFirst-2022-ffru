@@ -313,7 +313,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                 println(ok)
                 println("$c $lastc $s")
                 if (ok && s == '\n') {
-                    if (c == 13) {
+                    if (c == 13||c==10) {
                         writer.write("</p>")
                         ok = false
                         reader.mark(1)
