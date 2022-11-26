@@ -298,12 +298,14 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var ok = false
     var flag = false
     var temp = ""
-    var lasttemp = ""
+    var lastc = c
     var s: Char
     val st = mutableListOf<String>()
     writer.write("<html><body><p>")
     while (c != -1) {
+        lastc = c
         s = c.toChar()
+        //println("$c $s")
         c = reader.read()
         if (s == '\n') {
             if (ok && s == '\n') {
@@ -323,7 +325,13 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
             }
         } else if ((s == '*' || s == '~') && (s in temp || temp == "")) {
             temp += s
+            if (lastc != 13) {
+                ok = false
+            }
         } else {
+            if (lastc != 13) {
+                ok = false
+            }
             if (s !in temp && (s == '*' || s == '~')) {
                 flag = true
             }
@@ -389,7 +397,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
             }
         }
     }
-    writer.write("</body></html>")
+    writer.write("</p></body></html>")
     writer.close()
 }
 // kod probela - 32
