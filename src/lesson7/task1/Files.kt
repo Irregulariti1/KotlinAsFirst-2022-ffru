@@ -319,15 +319,13 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                     if (ok && s == '\n') {
                         writer.write("</p>")
                         ok = false
-                        reader.mark(1)
-                        if (reader.read() == -1) {
+                        if (c == -1) {
                             writer.write("</body></html>")
                             writer.close()
                             return
                         } else {
                             writer.write("<p>")
                             lastc = false
-                            reader.reset()
                             continue
                         }
                     } else if (s == '\n') {
