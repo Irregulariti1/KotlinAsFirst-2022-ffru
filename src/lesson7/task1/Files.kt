@@ -305,32 +305,31 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     while (c != -1) {
         lastc = c
         s = c.toChar()
-        //println("$c $s")
         c = reader.read()
-        if (s == '\n') {
-            if (ok && s == '\n') {
-                writer.write("</p>")
-                ok = false
-                reader.mark(1)
-                if (reader.read() == -1) {
-                    writer.write("</body></html>")
-                    writer.close()
-                    return
-                } else {
-                    writer.write("<p>")
-                    reader.reset()
-                }
-            } else if (s == '\n') {
-                ok = true
-            }
-        } else if ((s == '*' || s == '~') && (s in temp || temp == "")) {
+        if ((s == '*' || s == '~') && (s in temp || temp == "")) {
             temp += s
-            if (lastc != 13) {
-                ok = false
-            }
         } else {
-            if (lastc != 13) {
-                ok = false
+            if (s == '\n') {
+                println(ok)
+                println("$c $lastc $s")
+                if (ok && s == '\n') {
+                    if (c == 13) {
+                        writer.write("</p>")
+                        ok = false
+                        reader.mark(1)
+                        if (reader.read() == -1) {
+                            writer.write("</body></html>")
+                            writer.close()
+                            return
+                        } else {
+                            writer.write("<p>")
+                            reader.reset()
+                            continue
+                        }
+                    } else ok = false
+                } else if (s == '\n') {
+                    ok = true
+                }
             }
             if (s !in temp && (s == '*' || s == '~')) {
                 flag = true
