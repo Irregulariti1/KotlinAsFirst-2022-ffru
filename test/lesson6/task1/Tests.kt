@@ -169,4 +169,5 @@ class Tests {
         assertThrows(IllegalArgumentException::class.java) { ak47(mapOf(), "") }
     }
     */
+
 }
